@@ -28,8 +28,10 @@ app.use(express.json());
 
 //users
 const userRouters = require('./routers/user.router')
+const productRouters = require('./routers/product.router')
 
 app.use('/user', userRouters)
+app.use('/product', productRouters)
 
 
 app.get('/', (req, res) => {

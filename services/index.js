@@ -12,8 +12,8 @@ function sendEmail (req, res, html) {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: config.app.mail, // generated ethereal user
-            pass: config.app.mailPass// generated ethereal password
+            user: 'j.urbina.0179@gmail.com', // generated ethereal user
+            pass: '19111996te'// generated ethereal password
         }
         });
         

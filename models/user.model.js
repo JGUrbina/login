@@ -7,6 +7,9 @@ const userSchema = new Schema({
         required: true,
         trim: true
     },
+    nameBusiness: {
+        type: String
+    },
     lastName: {
         type: String,
         required: true,
@@ -18,19 +21,6 @@ const userSchema = new Schema({
         required: true,
         trim: true,
         minlength: 3
-    }
-    ,
-    userName: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        minlength: 3
-    },
-    phone: {
-        type: Number,
-        unique: true,
-        minlength: 7
     },
     email: {
         type: String,
@@ -38,6 +28,9 @@ const userSchema = new Schema({
         unique: true,
         trim: true,
         minlength: 3
+    },
+    genero: {
+        type: String
     },
     password: {
         type: String,

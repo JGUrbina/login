@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="index, follow">
+    <meta name="description"
+        content="Menús y Cartas digitales con QR para cafeterias y restaurantes. Tu carta digital qr en el celular de tus clientes.">
+    <meta name="keywords"
+        content="Cartas digitales, Menús digitales, cartas qr y menu qr, restaurantes y cafeterias qr, menús online, código qr">
+    <meta name="categories" content="Carta digital">
+
+    <link rel="shortcut icon" type="image/x-icon" href="./images/7205qr.ico">
+    <title>Tu CartaQR | Tu Carta y Menú digital</title>
+
+    <!--CSS-->
+    <link href="fonts/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+    <link href="css/select2.min.css" rel="stylesheet" media="all">
+    <link href="css/main.css" rel="stylesheet" media="all">
+    <!-- JS -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title">Registro</h2>
+                    <form method="POST" >
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Nombre de tu negocio" name="name" required id="nameBusiness">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Nombre" name="name" required id="name">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Apellido Paterno" name="name" required id="lastName">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Apellido Materno" name="name" required id="motherLastName">
+                        </div>
+                        <div class="input-group">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="gender" id="genero">
+                                    <option disabled="disabled" selected="selected">Sexo</option>
+                                    <option>Hombre</option>
+                                    <option>Mujer</option>
+                                    <option>Otro</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="email" placeholder="Email" name="email" required id="email">
+                        </div>
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit" id="register">Registrarme</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <!-- JS-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

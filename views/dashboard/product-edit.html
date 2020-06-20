@@ -1,0 +1,360 @@
+<!doctype html>
+<html class="no-js" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Dashboard TuCartaQR</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/meanmenu.min.css">
+    <link rel="stylesheet" href="css/cropper.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/morrisjs/morris.css">
+    <link rel="stylesheet" href="css/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="css/metisMenu/metisMenu-vertical.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+    <div class="left-sidebar-pro">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html"><img class="main-logo" src="img/logoacolor.png" width="120" height="120"
+                        alt="" /></a>
+            </div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <a class="has-arrow" href="index.html">
+                                <i class="fa big-icon fa fa-cutlery icon-wrap"></i>
+                                <span class="mini-click-non">Productos</span>
+                            </a>
+                            <ul class="submenu-angle" aria-expanded="true">
+                                <li><a href="product-list.html"><i aria-hidden="true"></i> <span
+                                            class="mini-sub-pro">Listado de
+                                            Productos</span></a></li>
+                                <li><a href="product-detail.html"><i aria-hidden="true"></i>
+                                        <span class="mini-sub-pro">Detalles de Productos</span></a></li>
+                                <li><a href="product-edit.html"><i aria-hidden="true"></i> <span
+                                            class="mini-sub-pro">Agregar
+                                            Productos</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="header-right-info">
+                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                                                <li class="nav-item"><a href="#" data-toggle="dropdown" role="button"
+                                                        aria-expanded="false" class="nav-link dropdown-toggle"><i
+                                                            class="fa fa-bell-o" aria-hidden="true"></i><span
+                                                            class="indicator-nt"></span></a>
+                                                    <div role="menu"
+                                                        class="notification-author dropdown-menu animated zoomIn">
+                                                        <div class="notification-single-top">
+                                                        </div>
+                                                        <ul class="notification-menu">
+                                                            <li>
+                                                                <a href="#">
+                                                                    <div class="notification-icon">
+                                                                        <i class="adminpro-checked-pro admin-check-pro"
+                                                                            aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div class="notification-content">
+                                                                        <span class="notification-date">16 Sept</span>
+                                                                        <p>Nueva calificación
+                                                                        </p>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+
+                                                        </ul>
+                                                        <div class="notification-view">
+                                                            <a href="#">Ver Todas</a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" data-toggle="dropdown" role="button"
+                                                        aria-expanded="false" class="nav-link dropdown-toggle">
+                                                        <i class="adminpro-user-rounded header-riht-inf"
+                                                            aria-hidden="true"></i>
+                                                        <span class="admin-name">Bienvenido</span>
+                                                        <i
+                                                            class="fa fa-angle-down adminpro-icon adminpro-down-arrow"></i>
+                                                    </a>
+                                                    <ul role="menu"
+                                                        class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                                        <li><a href="register.html"><span
+                                                                    class="fa fa-user author-log-ic"></span>Mi
+                                                                Perfil</a>
+                                                        </li>
+                                                        <li><a href="login.html"><span
+                                                                    class="fa fa-sign-out author-log-ic"></span>Cerrar
+                                                                sesión</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu start -->
+            <div class="mobile-menu-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="mobile-menu">
+                                <nav id="dropdown">
+                                    <ul class="mobile-menu-nav">
+                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">Productos<span
+                                                    class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
+                                            <ul class="collapse dropdown-header-top">
+                                                <li><a href="product-list.html">Listado de Productos</a></li>
+                                                <li><a href="product-detail.html">Detalles de Productos</a></li>
+                                                <li><a href="product-edit.html">Agregar Productos</a></li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu end -->
+
+            <div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <ul class="breadcome-menu">
+                                        <li><span class="bread-blod"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single pro tab start-->
+        <div class="single-product-tab-area mg-tb-15">
+            <!-- Single pro tab review Start-->
+            <div class="single-pro-review-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="review-tab-pro-inner">
+                                <ul id="myTab3" class="tab-review-design">
+                                    <li class="active"><a href="#description"><i aria-hidden="true"></i>Editar/Agregar
+                                            Producto</a></li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content custom-product-edit">
+                                    <div class="product-tab-list tab-pane fade active in" id="description">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="review-content-section">
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i></span>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nombre producto">
+                                                    </div>
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i></span>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Descripción breve producto">
+                                                    </div>
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i></span>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Descripción extensa producto">
+                                                    </div>
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-usd"
+                                                                aria-hidden="true"></i></span>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Precio de compra (opcional)">
+                                                    </div>
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-usd"
+                                                                aria-hidden="true"></i></span>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Precio a la venta">
+                                                    </div>
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon"><i class="fa fa-tag"
+                                                                aria-hidden="true">&nbsp;</i>Categorías</span>
+                                                        <select name="select"
+                                                            class="form-control pro-edt-select form-control-primary">
+                                                            <option value="opt1">Selecciona 1 o varias Categorías
+                                                            </option>
+                                                            <option value="opt2">Comida</option>
+                                                            <option value="opt3">Cena</option>
+                                                            <option value="opt4">Postres</option>
+                                                            <option value="opt5">Bebidas</option>
+                                                            <option value="opt6">Promociones</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="mg-b-pro-edt custom-pro-edt-ds">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light m-r-10">Guardar
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-warning waves-effect waves-light">Descartar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="product-tab-list tab-pane fade" id="reviews">
+                                        <div class="row">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="review-content-section">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Basic Image cropper Start -->
+        <div class="dual-list-box-area mg-tb-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline10-list shadow-reset">
+                            <div class="sparkline10-hd">
+                                <div class="main-sparkline10-hd">
+                                    <h1>Agregar Imagen</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline10-graph">
+                                <div class="basic-login-form-ad">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="dual-list-box-inner">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="image-crop">
+                                                            <img src="img/cropper/1.jpg" alt="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="preview-img-pro-ad">
+                                                            <h4>Imagen previa</h4>
+                                                            <div class="img-preview img-preview-custom"></div>
+                                                            <p>
+                                                                Sube una imagen y recórtala.
+                                                            </p>
+                                                            <div class="btn-group images-cropper-pro">
+                                                                <label for="inputImage"
+                                                                    class="btn btn-primary img-cropper-cp">
+                                                                    <input type="file" accept="image/*" name="file"
+                                                                        id="inputImage" class="hide"> Subir imagen
+                                                                </label>
+                                                                <label id="download"
+                                                                    class="btn btn-success">Guardar</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Basic Image cropper End-->
+
+        <div class="footer-copyright-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-copy-right">
+                            <p>Copyright &copy; 2020 <a href="https://www.tucartaqr.mx">TuCartaQR</a> Todos
+                                los derechos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="js/vendor/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/jquery.meanmenu.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/metisMenu/metisMenu.min.js"></script>
+    <script src="js/metisMenu/metisMenu-active.js"></script>
+    <script src="js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="js/sparkline/jquery.charts-sparkline.js"></script>
+    <script src="js/cropper.min.js"></script>
+    <script src="js/cropper-actice.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+
+</body>
+
+</html>

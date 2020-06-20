@@ -72,40 +72,33 @@ module.exports = {
         })
     },
     register: async function(req, res){
-            const {name, userName, lastName, motherLastName, email} = req.body
-            const phone = req.body.phone;
+        console.log(req.body)
+            const {name, userName, lastName, motherLastName, email, genero, nameBusiness} = req.body
             const rol = 'admin';
             const isVerify = false
             // async..await is not allowed in global scope, must use a wrapper
             let Req = req.body
             payLoad = {
                 name: req.body.name,
-                userName: req.body.userName,
+                lastName,
                 email: req.body.email,
                 isVerify: false,
-                phone: req.body.phone
             }
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = "<a href="+config.app.host+"'/user/confirmation/"+verify+"' >verify your accuont</a>";
+            const html = "<a href=http://127.0.0.1:5500/contrase%C3%B1a/index.html?"+verify+">verify your accuont</a>";
             
-            const newUser = new User({userName, email, name, phone, rol, isVerify, lastName, motherLastName})
+            const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
                                
             let userDB = await User.findOne({ $or: [
-                { email },
-                { phone },
-                {userName}
+                { email }
             ]})
 
           if (userDB) {
-            if (userName == userDB.userName) {
-                return res.send({ message: 'UserName already exists' })
-              }else if (email == userDB.email) {
+             if (email == userDB.email) {
                 return res.send({ message: 'E-mail already exists' })
-              }else if (phone == userDB.phone) {
-                return res.send({ message: 'phoneNumber already exists' })
-              } 
+              }
 
           }
 
@@ -118,14 +111,14 @@ module.exports = {
                 .catch(err => res.status(404).json('Error' + err));
     },
     login: function(req, res) {
-        let userName = req.body.userName
+        let email = req.body.email
         let password = req.body.password
-        User.findOne({ userName })
+        User.findOne({ email })
             .then(user => {
-                if(!user) return res.status(404).send({message: 'user not found'})
+                if(!user) return res.status(200).send({message: 'user not found'})
                 bcrypt.compare(password, user.password)
                     .then(match => {
-                        if(!user.isVerify) return res.status(200).send({message: 'Tienes que verificar tu email.'})
+                        if(!user.isVerify) return res.status(404).send({message: 'Tienes que verificar tu email.'})
                         if(!match) return res.status(200).send({message: 'Password Incorrecta!!'})
 
                         // res.status.json({token: service.createToken(user)}) ;
@@ -149,24 +142,24 @@ module.exports = {
             .catch(err => res.status(500).send({err}))
     },
     sendEmailPassReset: function(req, res) {
-    const  {email, userName} = req.body
+    const  {email, nameBusiness} = req.body
         
         User.findOne({email})
             .then(user => {
                 // res.status(200).send({message: user})
-                if(user.userName != userName || user.email != email) return res.json('Los datos enviados no son compatibles')
+                if(user.nameBusiness != nameBusiness || user.email != email) return res.json('Los datos enviados no son compatibles')
                 if(!user.isVerify) return res.status(200).send({message: 'Antes de cambiar tu contraseña tienes que verificar tu email.'})
                 payLoad = {
                     name: user.name,
-                    userName: user.userName,
-                    email: user.email,
-                    phone: user.phone
+                    nameBusiness: user.nameBusiness,
+                    email: user.email
                 }
                 let verify = jwt.sign(payLoad, config.app.secret_token, { expiresIn: '3h' });
                 console.log('Token: ', verify)
         
-                const html = "<a href=" + config.app.host +"'/user/passwordreset/" +verify+ "' >Password Reset</a>";
+                const html = "<a href="+"http://127.0.0.1:5500/contrase%C3%B1a/index.html?"+verify+">Password Reset</a>";
                 sendEmail(user, res, html)
+                res.status(200).send('solicitud de cambio de contraseña enviado, revise su email ')
             })
             .catch(err => res.status(404).json('Error' + err))
         
