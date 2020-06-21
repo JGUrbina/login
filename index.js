@@ -32,8 +32,8 @@ const productRouters = require('./routers/product.router')
 
 app.use('/user', userRouters)
 app.use('/product', productRouters)
-
+app.use(express.static(__dirname + '/views'));
 
 app.get('/', (req, res) => {
-    res.send({mesasse: 'Bienvenido a tucartaqr'})
+    res.sendFile(__dirname + '/views/login/index.html');
 })

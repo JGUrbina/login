@@ -87,7 +87,7 @@ module.exports = {
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = "<a href=http://127.0.0.1:5500/contrase%C3%B1a/index.html?"+verify+">verify your accuont</a>";
+            const html = "<a href=http://localhost:5001/user/confirmation/>"+verify+">verify your accuont</a>";
             
             const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
                                
