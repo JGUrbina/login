@@ -1,10 +1,10 @@
-require('dotenv').config
+require('dotenv').config;
 const  Product = require('../models/product.model');
 const User = require('../models/user.model');
 
 
-const jwt = require('jsonwebtoken')
-const config = require('../config')
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 module.exports = {
     all: function(req, res){
@@ -18,9 +18,22 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     destroy: function(req, res){
-        Product.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Product delete!!'))
-        .catch(err => res.status(404).json('Error' + err));
+        const { idUser, idProduct } = req.params;
+
+        Product.findByIdAndDelete(idProduct)
+            .then(producto => {
+                if(!producto) return res.status(404).send('No existe el producto');
+                User.findById(idUser)
+                    .then(user => {
+                        const nuevosProductos = user.products.filter(producto => producto != idProduct);
+                        user.products = nuevosProductos,
+                        user.save()
+                            .then(() => res.status(200).json('Se eliminó el producto del usuario'))
+                            .catch(err => res.status(403).json('No se pudo actualizar los productos del usuario'))
+                    })
+                    .catch(err => res.status(404).json('Error', err))
+            })
+            .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
         
@@ -77,9 +90,9 @@ module.exports = {
 
                 user.save()
                     .then(() => {
-                        res.status(200).json('Producto agregado al usuario');
+                        console.log('Producto agregado al usuario')
                     })
-                    .catch(err => res.status(404).json('Error', + err));
+                    .catch(err => res.status(404).send({ Error: err }));
                 
 
                 newProduct.save()
