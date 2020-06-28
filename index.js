@@ -8,9 +8,6 @@ const cors = require('cors');
 //connect to data base
 async function initApp() {
     try {
-        connecBD()
-
-        //Listening
         app.listen(port, () => console.log(`server on ${host}`) );
     }catch(err) {
         console.error(err)

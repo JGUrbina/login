@@ -1,6 +1,6 @@
 require('dotenv').config
-const  Product = require('../models/product.model')
-const User = require('../models/user.model')
+const  Product = require('../models/product.model');
+const User = require('../models/user.model');
 
 
 const jwt = require('jsonwebtoken')
@@ -41,7 +41,7 @@ module.exports = {
     },
     register: async function(req, res){
             const idUser = req.params.idUser
-            if(idUser) {
+            if(!idUser) {
                 return res.send({Error: 'Debes pasar el id del usuaria que agrega el producto'}); 
             }
             try{
@@ -56,26 +56,40 @@ module.exports = {
             const host = config.app.host
             const img = `${host}/public/${imgName}`
 
-            const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice, img })    
-            
-            console.log(user + '------------------------------')
-            
-        //     let ProductDB = await Product.findOne({ $or: [
-        //         { name, salePrice, descriptionShort }
-        //     ]})
+            const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice, img });
 
-        //   if (ProductDB) {
-        //      if (name == ProductDB.name && salePrice == ProductDB.salePrice && descriptionShort == ProductDB.descriptionShort) {
-        //         return res.send({ message: 'El platillo ya existe..!' })
-        //       }
+            try{
+                const user = await User.findById(idUser);
+                console.log(user + '------------------------------')
 
-        //   }
+                let ProductDB = await Product.findOne({
+                    $or: [
+                        { name, salePrice }
+                    ]
+                })
+                if (ProductDB) {
+                    if (name == ProductDB.name && salePrice == ProductDB.salePrice) {
+                        return res.send({ message: 'El platillo ya existe..!' })
+                    }
 
-           
-        //     newProduct.save()
-        //         .then(() => {
-        //             res.status(200).json('Product add, se ha agregado el producto correctamente')
-        //         })
-        //         .catch(err => res.status(404).json('Error' + err));
+                }
+                user.products.push(newProduct);
+
+                user.save()
+                    .then(() => {
+                        res.status(200).json('Producto agregado al usuario');
+                    })
+                    .catch(err => res.status(404).json('Error', + err));
+                
+
+                newProduct.save()
+                    .then(() => {
+                        res.status(200).json('Product add, se ha agregado el producto correctamente')
+                    })
+                    .catch(err => res.status(404).json('Error' + err));
+            }
+            catch(err){
+                res.send({Error: 'Intentas agregar un producto con un usuarioque no existe'})
+            }         
     }
 };
