@@ -20,6 +20,8 @@ async function initApp() {
  
 initApp()
 
+app.use('/public',express.static(__dirname + '/storage/images'))
+
 //Middlewares
 app.use(morgan('dev'));
 app.use(cors());
