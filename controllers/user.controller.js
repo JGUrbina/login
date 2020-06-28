@@ -7,6 +7,7 @@ const moment = require('moment')
 const bcrypt = require('bcryptjs')
 const { sendEmail } = require('../services') 
 const config = require('../config')
+const { use } = require('../routers/user.router')
 
 module.exports = {
     all: function(req, res){
@@ -126,12 +127,13 @@ module.exports = {
                                 id: user._id,
                                 userName: user.userName,
                                 email: user.email,
-                                rol: user.rol
+                                rol: user.rol,
+                                nameBusiness: user.nameBusiness
                             }
                         // poner clave secreta en una variable de entorno
                             jwt.sign(payLoad, config.app.secret_token , (err, token) => {
                                 if(err) return res.status(500).json({Error : err})
-                                res.status(200).json({message: 'aceso consedido', token})
+                                res.status(200).json({message: 'aceso consedido', token, payLoad})
                             })
                         
                         
