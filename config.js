@@ -5,7 +5,7 @@ config = {
         port: process.env.PORT,
         host: process.env.HOST,
         secret_token: process.env.SECRET_TOKEN,
-        mail: process.env.MAIL,
+        mail: process.env.EMAIL,
         mailPass: process.env.MAIL_PASS
 
     }, 

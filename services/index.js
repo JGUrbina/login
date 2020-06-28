@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer")
+const config = require('../config')
 
 function sendEmail (req, res, html) {
     async function main() {
@@ -12,16 +13,16 @@ function sendEmail (req, res, html) {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'j.urbina.0179@gmail.com', // generated ethereal user
-            pass: '19111996te'// generated ethereal password
+            user: config.app.mail, // generated ethereal user
+            pass: config.app.mailPass// generated ethereal password
         }
         });
-        
+
 
         
         // send mail with defined transport object
         let info = await transporter.sendMail({
-        from: '"José Grasmin👻" <j.urbina.0179@gmail.com>', // sender address
+        from: '"José Grasmin👻" <'+config.app.mail+'>', // sender address
         to: req.email, // list of receivers
         subject: "verifica tu cuenta ✔", // Subject line
         text: "Hello " + req.name, // plain text body

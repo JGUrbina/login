@@ -70,6 +70,7 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
             
         })
+        res.redirect('https://localhost/cartaqr/login/contraseña');
     },
     register: async function(req, res){
         console.log(req.body)
@@ -87,7 +88,7 @@ module.exports = {
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = "<a href=http://localhost:5001/user/confirmation/>"+verify+">verify your accuont</a>";
+            const html = `<a href="https://localhost/cartaqr/login/contraseña?${verify}">Verify your account</a>`;
             
             const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
                                
@@ -119,7 +120,7 @@ module.exports = {
                 bcrypt.compare(password, user.password)
                     .then(match => {
                         if(!user.isVerify) return res.status(404).send({message: 'Tienes que verificar tu email.'})
-                        if(!match) return res.status(200).send({message: 'Password Incorrecta!!'})
+                        if(!match) return res.status(404).json({message: 'Password Incorrecta!!'})
 
                         // res.status.json({token: service.createToken(user)}) ;
                             payLoad = {
@@ -142,26 +143,28 @@ module.exports = {
             .catch(err => res.status(500).send({err}))
     },
     sendEmailPassReset: function(req, res) {
-    const  {email, nameBusiness} = req.body
+    const {email, nameBusiness} = req.body
         
         User.findOne({email})
             .then(user => {
                 // res.status(200).send({message: user})
-                if(user.nameBusiness != nameBusiness || user.email != email) return res.json('Los datos enviados no son compatibles')
-                if(!user.isVerify) return res.status(200).send({message: 'Antes de cambiar tu contraseña tienes que verificar tu email.'})
+                if(user.nameBusiness != nameBusiness || user.email != email) return res.json('Los datos enviados no son compatibles');
+                if(!user.isVerify) return res.status(200).send({message: 'Antes de cambiar tu contraseña tienes que verificar tu email.'});
+                
                 payLoad = {
                     name: user.name,
                     nameBusiness: user.nameBusiness,
                     email: user.email
-                }
+                };
+
                 let verify = jwt.sign(payLoad, config.app.secret_token, { expiresIn: '3h' });
                 console.log('Token: ', verify)
         
-                const html = "<a href="+"http://127.0.0.1:5500/contrase%C3%B1a/index.html?"+verify+">Password Reset</a>";
+                const html = `<a href="https://localhost/cartaqr/login/contraseña?${verify}">Password Reset</a>`;
                 sendEmail(user, res, html)
                 res.status(200).send('solicitud de cambio de contraseña enviado, revise su email ')
             })
-            .catch(err => res.status(404).json('Error' + err))
+            .catch(err => res.status(404).json('Error' + err));
         
     },
     passReset: function(req, res) {
@@ -171,27 +174,27 @@ module.exports = {
                 return res.status(403).send({ 
                     message: 'no tienes los permisos suficientes para estar aqui', 
                     error: err 
-                })
-            }
+                });
+            };
             
-            let email = decode.email
-            let userName = decode.userName
-            let password = req.body.password
+            let email = decode.email;
+            let userName = decode.userName;
+            let password = req.body.password;
         
             // res.status(200).send({email: decode.email, names: decode.name, userName: decode.userName, phones: decode.phone})
-        User.findOne({email})
-        .then(user => {
-            if(!user) return res.status(404).send({message: 'user not found'})
-            // res.status(200).send({email, names: decode.name, userName: decode.userName, phones: decode.phone})
-            user.userName = userName
-            user.email = email
-            user.password = password
-            user.save()
-                .then(() => res.json('Password Reset!!!'))
-                .catch(err => res.status(404).json('Error' + err))
-        })
-        .catch(err => res.status(404).json('Error' + err));
+            User.findOne({email})
+            .then(user => {
+                if(!user) return res.status(404).send({message: 'user not found'});
+                // res.status(200).send({email, names: decode.name, userName: decode.userName, phones: decode.phone})
+                user.userName = userName;
+                user.email = email;
+                user.password = password;
+                user.save()
+                    .then(() => res.json('Password Reset!!!'))
+                    .catch(err => res.status(404).json('Error' + err))
+            })
+            .catch(err => res.status(404).json('Error' + err));
             
-        })
+        });
     }
 };

@@ -1,4 +1,5 @@
 const {port, host} = require('./config').app
+const db = require('./config').db
 const express = require('express');
 const app = express();
 const connecBD = require('./db')
@@ -8,7 +9,7 @@ const cors = require('cors');
 //connect to data base
 async function initApp() {
     try {
-        connecBD()
+        connecBD(db.port, db.host, db.dbName)
 
         //Listening
         app.listen(port, () => console.log(`server on ${host}`) );
