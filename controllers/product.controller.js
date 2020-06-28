@@ -53,8 +53,8 @@ module.exports = {
 
             const {name, descriptionShort, descriptionLong, purchasePrice, salePrice } = req.body
             const imgName = req.file.filename
-            const host = config.app.host
-            const img = `${host}/public/${imgName}`
+            const { port, host } = config.app;
+            const img = `http://${host}:${port}/public/${imgName}`
 
             const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice, img });
 
