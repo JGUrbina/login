@@ -88,7 +88,7 @@ module.exports = {
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = `<a href="https://localhost/cartaqr/login/contraseña?${verify}">Verify your account</a>`;
+            const html = `<a href="${config.front.host}/login/contraseña?${verify}">Verify your account</a>`;
             
             const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
                                
