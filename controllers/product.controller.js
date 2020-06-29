@@ -1,10 +1,14 @@
 require('dotenv').config;
 const  Product = require('../models/product.model');
 const User = require('../models/user.model');
+const fs = require('fs')
+const path = require('path')
+const config = require('../config')
+const { port, host } = config.app
 
 
 const jwt = require('jsonwebtoken');
-const config = require('../config');
+
 
 module.exports = {
     all: function(req, res){
@@ -52,6 +56,50 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
+    editImg: function(req, res) {
+        const idProduct = req.params.idProduct
+        if(!idProduct) return res.status(400).send({Error: 'Debes indicar el ID del producto al cual deseas editar la  imagen'})
+        Product.findById(idProduct)
+        .then(async product => {
+            const imgLink = product.img
+            const img = imgLink.split('/')[4]
+            const rutaImg = path.join(__dirname, `../storage/images/${img}`)
+            const imgName = req.file.filename
+            const newImg = `http://${host}:${port}/public/${imgName}`
+           
+            
+                fs.stat(rutaImg, (err) => {
+                        if(err) return res.status(404).send({Error: 'Archivo no encontrado'})
+                        fs.unlink(rutaImg, async (error) => {
+                            if(error) return  res.send({Error:'No se ha podido eliminar el archivo', error})
+                            
+                               product.img = newImg
+
+                               product.save()
+                                .then(() =>  res.status(200).send({message: 'Imagen editada'}))
+                                .catch(err => res.send({Error: 'No se pudo guardar la url de la imagen'}))
+                           
+                        })
+                })
+                    
+                
+
+            
+
+                
+            
+            
+            
+            
+            
+            
+            
+            
+
+        })
+        
+        
+    },
     register: async function(req, res){
             const idUser = req.params.idUser
             if(!idUser) {
@@ -66,7 +114,7 @@ module.exports = {
 
             const {name, descriptionShort, descriptionLong, purchasePrice, salePrice } = req.body
             const imgName = req.file.filename
-            const { port, host } = config.app;
+            
             const img = `http://${host}:${port}/public/${imgName}`
 
             const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice, img });

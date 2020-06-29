@@ -7,8 +7,7 @@ const config = require('../config')
 const connection = mongoose.connection
 
 connection.once('open', () => {
-    console.log('MongoDB database connection established successfolly') 
-    
+    console.log('MongoDB database connection established successfolly')
 }
     
     )
