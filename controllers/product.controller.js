@@ -60,7 +60,7 @@ module.exports = {
         const idProduct = req.params.idProduct
         if(!idProduct) return res.status(400).send({Error: 'Debes indicar el ID del producto al cual deseas editar la  imagen'})
         Product.findById(idProduct)
-        .then(async product => {
+        .then(product => {
             const imgLink = product.img
             const img = imgLink.split('/')[4]
             const rutaImg = path.join(__dirname, `../storage/images/${img}`)
@@ -81,21 +81,7 @@ module.exports = {
                            
                         })
                 })
-                    
-                
-
-            
-
-                
-            
-            
-            
-            
-            
-            
-            
-            
-
+            .catch(err => res.status(404).send({Error: 'Producto no encontrado'}))
         })
         
         
