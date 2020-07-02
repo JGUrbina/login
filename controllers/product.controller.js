@@ -16,6 +16,26 @@ module.exports = {
         .then(product => res.status(200).json(product))
         .catch(err => res.status(404).json('Error' + err));
     },
+    viewPerUser: async function(req, res){
+
+        const userId = req.params.idUser;
+
+        let user;
+        if(!userId) res.send('Debes introducir un usuario válido');
+        try{
+            user = await User.findById(userId)
+        }catch {
+            res.send('El usuario no existe');
+        };
+        
+        try{
+            const products = await Product.find({_id: user.products})
+            products.length > 0 ? res.send(products) : res.send('No se han encontrado productos');
+        }
+        catch{
+            res.send('Ha ocurrido un error');
+        };
+    },
     viewOne: function(req, res){
         Product.findById(req.params.id)
         .then(product => res.json(product))
@@ -80,21 +100,7 @@ module.exports = {
                                 .catch(err => res.send({Error: 'No se pudo guardar la url de la imagen'}))
                            
                         })
-                })
-                    
-                
-
-            
-
-                
-            
-            
-            
-            
-            
-            
-            
-            
+                })     
 
         })
         
@@ -112,12 +118,12 @@ module.exports = {
                 res.send({Error: 'Intentas agregar un producto con un usuarioque no existe'})
             }
 
-            const {name, descriptionShort, descriptionLong, purchasePrice, salePrice } = req.body
+            const {name, descriptionShort, descriptionLong, purchasePrice, salePrice, categories } = req.body
             const imgName = req.file.filename
             
             const img = `http://${host}:${port}/public/${imgName}`
 
-            const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice, img });
+            const newProduct = new Product({name, descriptionShort, descriptionLong, purchasePrice, salePrice,categories, img });
 
             try{
                 const user = await User.findById(idUser);

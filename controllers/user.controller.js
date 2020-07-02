@@ -88,7 +88,7 @@ module.exports = {
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = "<a href=http://localhost:5001/user/confirmation/"+verify+">verify your accuont</a>";
+            const html = `<a href="${config.front.host}/login/contraseña?${verify}">verify your accuont</a>`;
             
             const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
                                
@@ -145,7 +145,6 @@ module.exports = {
     },
     sendEmailPassReset: function(req, res) {
     const  {email, nameBusiness} = req.body
-        
         User.findOne({email})
             .then(user => {
                 // res.status(200).send({message: user})
@@ -159,7 +158,7 @@ module.exports = {
                 let verify = jwt.sign(payLoad, config.app.secret_token, { expiresIn: '3h' });
                 console.log('Token: ', verify)
         
-                const html = "<a href="+"http://127.0.0.1:5500/contrase%C3%B1a/index.html?"+verify+">Password Reset</a>";
+                const html = `<a href="${config.front.host}/login/contraseña?${verify}">Reset account</a>`;
                 sendEmail(user, res, html)
                 res.status(200).send('solicitud de cambio de contraseña enviado, revise su email ')
             })
