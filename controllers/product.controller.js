@@ -117,7 +117,7 @@ module.exports = {
                 const user = await User.findById(idUser)
                 console.log(user + '+++++++++++++++++++++++++++++++++++++')
             }catch(err){
-                res.send({Error: 'Intentas agregar un producto con un usuarioque no existe'})
+                res.send({Error: 'Intentas agregar un producto con un usuario que no existe'})
             }
 
             const {name, descriptionShort, descriptionLong, purchasePrice, salePrice, categories } = req.body
@@ -133,12 +133,12 @@ module.exports = {
 
                 let ProductDB = await Product.findOne({
                     $or: [
-                        { name, salePrice }
+                        { name }
                     ]
                 })
                 if (ProductDB) {
-                    if (name == ProductDB.name && salePrice == ProductDB.salePrice) {
-                        return res.send({ message: 'El platillo ya existe..!' })
+                    if (name == ProductDB.name) {
+                        return res.send({ Error: 'El platillo ya existe, intenta con otro nombre de platillo' })
                     }
 
                 }
@@ -153,12 +153,12 @@ module.exports = {
 
                 newProduct.save()
                     .then(() => {
-                        res.status(200).json('Product add, se ha agregado el producto correctamente')
+                        res.status(200).send({ message: 'Producto agregado correctamente' })
                     })
                     .catch(err => res.status(404).json('Error' + err));
             }
             catch(err){
-                res.send({Error: 'Intentas agregar un producto con un usuarioque no existe'})
+                res.send({Error: 'Intentas agregar un producto con un usuario que no existe'})
             }         
     },
     changeStatus: function(req, res){

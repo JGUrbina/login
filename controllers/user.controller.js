@@ -56,7 +56,7 @@ module.exports = {
             // res.status(200).send({email: decode.email, names: decode.name, userName: decode.userName, phones: decode.phone})
         User.findOne({email})
         .then(user => {
-            if(!user) return res.status(404).send({message: 'user not found'})
+            if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
             // res.status(200).send({email, names: decode.name, userName: decode.userName, phones: decode.phone})
             user.userName = userName
             user.email = email
@@ -116,11 +116,11 @@ module.exports = {
         let password = req.body.password
         User.findOne({ email })
             .then(user => {
-                if(!user) return res.status(200).send({message: 'user not found'})
+                if(!user) return res.status(200).send({message: 'Usuario no encontrado'})
                 bcrypt.compare(password, user.password)
                     .then(match => {
                         if(!user.isVerify) return res.status(404).send({message: 'Tienes que verificar tu email.'})
-                        if(!match) return res.status(200).send({message: 'Password Incorrecta!!'})
+                        if(!match) return res.status(200).send({message: 'Contraseña incorrecta'})
 
                         // res.status.json({token: service.createToken(user)}) ;
                             payLoad = {
@@ -182,7 +182,7 @@ module.exports = {
             // res.status(200).send({email: decode.email, names: decode.name, userName: decode.userName, phones: decode.phone})
         User.findOne({email})
         .then(user => {
-            if(!user) return res.status(404).send({message: 'user not found'})
+            if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
             // res.status(200).send({email, names: decode.name, userName: decode.userName, phones: decode.phone})
             user.userName = userName
             user.email = email
