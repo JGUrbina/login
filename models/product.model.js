@@ -33,6 +33,10 @@ const productSchema = new Schema({
         trim: true,
         minlength: 3
     }],
+    status: {
+        type: Boolean,
+        default: true
+    },
     img: {
         type: String
     }

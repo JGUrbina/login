@@ -1,5 +1,5 @@
 require('dotenv').config;
-const  Product = require('../models/product.model');
+const Product = require('../models/product.model');
 const User = require('../models/user.model');
 const fs = require('fs')
 const path = require('path')
@@ -18,19 +18,21 @@ module.exports = {
     },
     viewPerUser: async function(req, res){
 
-        const userId = req.params.idUser;
+        const nameBusiness = req.params.nameBusiness;
 
         let user;
-        if(!userId) res.send('Debes introducir un usuario válido');
+        if(!nameBusiness) res.send('Debes introducir un restaurante válido');
         try{
-            user = await User.findById(userId)
+            user = await User.findOne({ nameBusiness })
         }catch {
             res.send('El usuario no existe');
         };
+        console.log('id', user.products);
+        !user ? res.send('No se ha encontrado el restaurante') : null;
         
         try{
-            const products = await Product.find({_id: user.products})
-            products.length > 0 ? res.send(products) : res.send('No se han encontrado productos');
+            const products = await Product.find({ _id: user.products });
+            products.length > 0 ? res.send(products) : res.status(404).send('No se han encontrado productos');
         }
         catch{
             res.send('Ha ocurrido un error');
@@ -158,5 +160,20 @@ module.exports = {
             catch(err){
                 res.send({Error: 'Intentas agregar un producto con un usuarioque no existe'})
             }         
+    },
+    changeStatus: function(req, res){
+        const id = req.params.idProduct;
+        Product.findOne({ _id: id })
+            .then(product => {
+                product.status = !product.status;
+                product.save()
+                    .then(() => {
+                        res.json('Producto modificado exitosamente');
+                    })
+                    .catch(err => {
+                        res.send('No se pudo cambiar el status del producto')
+                    })
+            })
+            .catch(err => res.status(404).json('Error' + err));
     }
 };
