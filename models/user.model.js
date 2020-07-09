@@ -46,7 +46,40 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
-    isVerify: Boolean
+    logo: {
+        type: String
+    },
+    coverImg: {
+        type: String
+    },
+    comercialName: {
+        type: String
+    },
+    businessDescription: {
+        type: String
+    },
+    webUrl: {
+        type: String
+    },
+    instaUrl: {
+        type: String
+    },
+    fbUrl: {
+        type: String
+    },
+    twitterUrl: {
+        type: String
+    },
+    whatsNumber: {
+        type: Number
+    },
+    promotionalImg: {
+        type: String
+    },
+    isVerify: Boolean,
+    plan: {
+        type: String
+    }
 },
 {
     timestamps: true,

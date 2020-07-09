@@ -13,7 +13,7 @@ connection.once('open', () => {
     )
 
 async function connecBD(mongo, port, host, dbName) {
-    // const uri = `${mongo}://${host}:${port}/${dbName}`
+    //const uri = `${mongo}://${host}:${port}/${dbName}`
     // const uri = config.db.host
     const uri = 'mongodb+srv://jgurbina:9vKOnvzgpIAxGOFX@cluster0-dc0qg.mongodb.net/tucartaqr2'
     await mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})

@@ -127,8 +127,7 @@ module.exports = {
                                 id: user._id,
                                 userName: user.userName,
                                 email: user.email,
-                                rol: user.rol,
-                                nameBusiness: user.nameBusiness
+                                rol: user.rol
                             }
                         // poner clave secreta en una variable de entorno
                             jwt.sign(payLoad, config.app.secret_token , (err, token) => {
@@ -194,5 +193,24 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
             
         })
+    },
+    updateGeneralData: function(req, res) {
+        const { idUser } = req.params;
+        
+        let data = req.body;
+
+        if(!idUser){
+            return res.send({ Error: 'Debes pasar el id del usuario para registrar los datos generales'})
+        };
+
+        User.update({ _id: idUser}, data , (err, numberAffected) => {
+
+                if(err) res.send({ error: err})
+
+                if(numberAffected) {
+                    res.send({ message: 'Se han actualizado los datos generales'})
+                };
+
+            });
     }
 };
