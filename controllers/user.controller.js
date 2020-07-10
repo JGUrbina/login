@@ -98,7 +98,7 @@ module.exports = {
 
           if (userDB) {
              if (email == userDB.email) {
-                return res.send({ message: 'E-mail already exists' })
+                return res.send({ message: 'El correo ya ha sido registrado' })
               }
 
           }
@@ -107,7 +107,7 @@ module.exports = {
             newUser.save()
                 .then(() => {
                     sendEmail(Req, res, html)
-                    res.status(200).json('User add, hemos enviado un email para verificarlo')
+                    res.status(200).json('Se ha enviado un mail de verificación a tu correo')
                 })
                 .catch(err => res.status(404).json('Error' + err));
     },
