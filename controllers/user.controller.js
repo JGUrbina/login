@@ -107,7 +107,7 @@ module.exports = {
             newUser.save()
                 .then(() => {
                     sendEmail(Req, res, html)
-                    res.status(200).json('Se ha enviado un mail de verificación a tu correo')
+                    res.send({ message: 'Se ha enviado un mail de verificación a tu correo' })
                 })
                 .catch(err => res.status(404).json('Error' + err));
     },
