@@ -62,21 +62,23 @@ module.exports = {
             .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
-        
+    
         Product.findById(req.params.id)
         .then(product => {
-            product.name = req.body.name
-            product.descriptionShort = req.body.descriptionShort
-            product.descriptionLong = req.body.descriptionLong
-            product.purchasePrice = req.body.purchasePrice
-            product.salePrice = req.body.salePrice
+            product.name = req.body.name;
+            product.descriptionShort = req.body.descriptionShort;
+            product.descriptionLong = req.body.descriptionLong;
+            product.purchasePrice = req.body.purchasePrice;
+            product.salePrice = req.body.salePrice;
+            product.categories = req.body.categories;
 
-            res.send(product)
+            if(req.file) product.img = `http://${host}:${port}/public/${req.file.filename}`;
+
             product.save()
-                .then(() => res.json('Product Update!'))
-                .catch(err => res.status(404).json('Error' + err))
+                .then(() => res.status(200).send({ message: 'Se ha actualizado el producto exitosamente' }))
+                .catch(err => res.status(400).json({ Error: 'No se pudo actualizar el platillo' }));
         })
-        .catch(err => res.status(404).json('Error' + err));
+        .catch(err => console.log('err', err));
     },
     editImg: function(req, res) {
         const idProduct = req.params.idProduct
@@ -95,7 +97,7 @@ module.exports = {
                         fs.unlink(rutaImg, async (error) => {
                             if(error) return  res.send({Error:'No se ha podido eliminar el archivo', error})
                             
-                               product.img = newImg
+                               product.img = newImg;
 
                                product.save()
                                 .then(() =>  res.status(200).send({message: 'Imagen editada'}))
