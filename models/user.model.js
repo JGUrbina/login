@@ -76,10 +76,27 @@ const userSchema = new Schema({
     promotionalImg: {
         type: String
     },
+    ratingEmail: {
+        type: String
+    },
+    whataccepts: { 
+        delivery: {
+            type: Boolean,
+            default: false
+        },
+        localconsume: {
+            type: Boolean,
+            default: false
+        },
+        takeOrder: {
+            type: Boolean,
+            default: false
+        }
+    },
     isVerify: Boolean,
     plan: {
         type: String
-    }
+    },
 },
 {
     timestamps: true,
