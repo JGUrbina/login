@@ -72,11 +72,31 @@ module.exports = {
             product.salePrice = req.body.salePrice;
             product.categories = req.body.categories;
 
-            if(req.file) product.img = `http://${host}:${port}/public/${req.file.filename}`;
+            if(req.file) {
+                const imgLink = product.img;
+                const img = imgLink.split('/')[4];
+                const rutaImg = path.join(__dirname, `../storage/images/${img}`);
 
-            product.save()
+                fs.stat(rutaImg, (err) => {
+                    if(err) return res.status(404).send({Error: 'Archivo no encontrado'});
+                    fs.unlink(rutaImg, async (error) => {
+                        if(error) return  res.send({Error:'No se ha podido eliminar el archivo', error});
+                        
+                        const urlImg = `http://${host}:${port}/public/${req.file.filename}`
+                        product.img = urlImg;
+                        
+                           product.save()
+                            .then(() =>  res.status(200).send({message: 'Se ha actualizad el producto y la imagen exitosamente'}))
+                            .catch(err => res.send({Error: 'No se pudo guardar la url de la imagen'}));
+                            
+                    });
+                });
+            }else {
+                product.save()
                 .then(() => res.status(200).send({ message: 'Se ha actualizado el producto exitosamente' }))
                 .catch(err => res.status(400).json({ Error: 'No se pudo actualizar el platillo' }));
+            };
+
         })
         .catch(err => console.log('err', err));
     },
@@ -122,7 +142,8 @@ module.exports = {
                 res.send({Error: 'Intentas agregar un producto con un usuario que no existe'})
             }
 
-            const {name, descriptionShort, descriptionLong, purchasePrice, salePrice, categories } = req.body
+            const {name, descriptionShort, descriptionLong, purchasePrice, salePrice, categories } = req.body;
+            
             const imgName = req.file.filename
             
             const img = `http://${host}:${port}/public/${imgName}`

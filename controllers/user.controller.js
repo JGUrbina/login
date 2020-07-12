@@ -7,6 +7,8 @@ const moment = require('moment')
 const bcrypt = require('bcryptjs')
 const { sendEmail } = require('../services') 
 const config = require('../config')
+const fs = require('fs')
+const path = require('path')
 const { use } = require('../routers/user.router')
 
 module.exports = {
@@ -197,22 +199,82 @@ module.exports = {
     },
     updateGeneralData: function(req, res) {
         const { idUser } = req.params;
-        
-        let data = req.body;
+        const { 
+            comercialName,
+            businessDescription,
+            whatsNumber,
+            webUrl,
+            instaUrl,
+            fbUrl,
+            twitterUrl,
+            delivery,
+            localconsume,
+            takeOrder,
+            ratingEmail
+        } = req.body;
+
+
 
         if(!idUser){
             return res.status(404).send({ error: 'Debes pasar el id del usuario para registrar los datos generales'})
+        }else {
+            User.findById(idUser)
+                .then(user => {
+                    const whataccepts = { delivery, localconsume, takeOrder };
+
+                    user.comercialName = comercialName;
+                    user.businessDescription = businessDescription;
+                    user.whatsNumber = whatsNumber;
+                    user.webUrl = webUrl;
+                    user.instaUrl = instaUrl;
+                    user.fbUrl = fbUrl;
+                    user.twitterUrl = twitterUrl;
+                    user.whataccepts = whataccepts;
+                    user.ratingEmail = ratingEmail;
+
+                    if(req.files && req.files.length > 0){
+                        const handleImage = (newImage, oldImage) => {
+                            if(oldImage && oldImage.length > 0 && oldImage != "undefined"){
+                                const imgLink = oldImage;
+                                const img = imgLink.split('/')[4];
+                                const rutaImg = path.join(__dirname, `../storage/images/${img}`);
+                                console.log('rutaimg', rutaImg);
+                                fs.stat(rutaImg, (err) => {
+                                    if(err) return res.status(404).send({Error: 'Archivo no encontrado'});
+                                    fs.unlink(rutaImg, async (error) => {
+                                        if(error) return  res.send({Error:'No se ha podido eliminar el archivo', error});
+                                    });
+                                });
+                            };
+                            const urlImg = `http://${config.app.host}:${config.app.port}/public/${newImage.filename}`;
+                            return urlImg;
+                        };
+
+                        req.files.forEach(file => {
+                            switch(file.fieldname){
+                                case 'logo':
+                                    user.logo = handleImage(file, user.logo);
+                                    break;
+                                case 'coverImg':
+                                    user.coverImg = handleImage(file, user.coverImg);
+                                    break;
+                                case 'promotionalImg':
+                                    user.promotionalImg = handleImage(file, user.promotionalImg);
+                                    break;
+                                default: 
+                                    console.log('ninguno');
+                                    break;
+                            };
+                        });
+                    };
+
+
+                    user.save()
+                        .then(() => res.status(200).send({ message: 'Los datos generales han sido actualizados'}))
+                        .catch(err => console.log('err', err));
+            });
         };
 
-        User.update({ _id: idUser}, data , (err, numberAffected) => {
-
-                if(err) res.status(400).send({ error: err})
-
-                if(numberAffected) {
-                    res.send({ message: 'Se han actualizado los datos generales exitosamente'})
-                };  
-
-            });
     },
     generalData: function(req, res) {
         const nameBusiness = req.params.nameBusiness;
