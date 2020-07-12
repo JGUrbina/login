@@ -213,5 +213,28 @@ module.exports = {
                 };  
 
             });
+    },
+    generalData: function(req, res) {
+        const nameBusiness = req.params.nameBusiness;
+
+        User.findOne({ nameBusiness })
+            .then(user => {
+                const data = {
+                logo: user.logo,
+                coverImg: user.coverImg,
+                comercialName: user.comercialName,
+                businessDescription: user.businessDescription,
+                webUrl: user.webUrl,
+                instaUrl: user.instaUrl,
+                fbUrl: user.fbUrl,
+                twitterUrl: user.twitterUrl,
+                whatsNumber: user.whatsNumber,
+                promotionalImg: user.promotionalImg,
+                ratingEmail: user.ratingEmail,
+                whataccepts: user.whataccepts
+            };
+                res.send(data);
+            })
+            .catch(err => res.status(404).json('Error' + err));
     }
 };

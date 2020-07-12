@@ -16,7 +16,8 @@ router.route('/confirmation/:token').get(User.confirmation)
 router.route('/login').post(User.login)
 router.route('/emailpassreset').post(User.sendEmailPassReset)
 router.route('/passwordreset/:token').post(User.passReset)
-router.route('/updateGeneralData/:idUser').put(User.updateGeneralData)
+router.route('/updategeneraldata/:idUser').put(User.updateGeneralData)
+router.route('/generaldata/:nameBusiness').get(User.generalData)
 
 
 
