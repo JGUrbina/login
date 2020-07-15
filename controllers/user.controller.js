@@ -42,57 +42,18 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
-    confirmation: function (req, res) {
-        let token = req.params.token;
-        jwt.verify(token, config.app.secret_token , (err, decode) => {
-            if(err) {
-                return res.status(403).send({ 
-                    message: 'no tienes los permisos suficientes para estar aqui', 
-                    error: err 
-                })
-            }
-            
-            let email = decode.email
-            let userName = decode.userName
-        
-            // res.status(200).send({email: decode.email, names: decode.name, userName: decode.userName, phones: decode.phone})
-        User.findOne({email})
-        .then(user => {
-            if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
-            // res.status(200).send({email, names: decode.name, userName: decode.userName, phones: decode.phone})
-            user.userName = userName
-            user.email = email
-            user.isVerify = true
-            user.save()
-                .then(() => res.send({
-                    message: 'Email verificado!!!',
-                    token
-                }))
-                .catch(err => res.status(404).json('Error' + err))
-        })
-        .catch(err => res.status(404).json('Error' + err));
-            
-        })
-    },
     register: async function(req, res){
         console.log(req.body)
-            const {name, userName, lastName, motherLastName, email, genero, nameBusiness} = req.body
-            const rol = 'admin';
-            const isVerify = false
+            const { name, lastName, motherLastName, email, nameBusiness, password } = req.body;
             // async..await is not allowed in global scope, must use a wrapper
             let Req = req.body
             payLoad = {
                 name: req.body.name,
                 lastName,
-                email: req.body.email,
-                isVerify: false,
+                email: req.body.email
             }
-            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
-            console.log('Token: ', verify)
-
-            const html = `<a href="${config.front.host}/login/contraseña?${verify}">verify your accuont</a>`;
             
-            const newUser = new User({email, name, rol, isVerify, lastName, motherLastName, genero, nameBusiness})
+            const newUser = new User({ email, name, lastName, motherLastName, nameBusiness, password });
                                
             let userDB = await User.findOne({ $or: [
                 { email }
@@ -108,8 +69,7 @@ module.exports = {
            
             newUser.save()
                 .then(() => {
-                    sendEmail(Req, res, html)
-                    res.send({ message: 'Se ha enviado un mail de verificación a tu correo' })
+                    res.send({ message: 'Se ha registrado el usuario' })
                 })
                 .catch(err => res.status(404).json('Error' + err));
     },
@@ -121,7 +81,6 @@ module.exports = {
                 if(!user) return res.status(200).send({message: 'Usuario no encontrado'})
                 bcrypt.compare(password, user.password)
                     .then(match => {
-                        if(!user.isVerify) return res.status(404).send({message: 'Tienes que verificar tu email.'})
                         if(!match) return res.status(200).send({message: 'Contraseña incorrecta'})
 
                         // res.status.json({token: service.createToken(user)}) ;
@@ -151,7 +110,6 @@ module.exports = {
             .then(user => {
                 // res.status(200).send({message: user})
                 if(user.nameBusiness != nameBusiness || user.email != email) return res.json('Los datos enviados no son compatibles')
-                if(!user.isVerify) return res.status(200).send({message: 'Antes de cambiar tu contraseña tienes que verificar tu email.'})
                 payLoad = {
                     name: user.name,
                     nameBusiness: user.nameBusiness,
@@ -221,6 +179,8 @@ module.exports = {
             User.findById(idUser)
                 .then(user => {
                     const whataccepts = { delivery, localconsume, takeOrder };
+
+                    console.log('whataccepts', whataccepts);
 
                     user.comercialName = comercialName;
                     user.businessDescription = businessDescription;

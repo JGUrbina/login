@@ -49,15 +49,30 @@ module.exports = {
         Product.findByIdAndDelete(idProduct)
             .then(producto => {
                 if(!producto) return res.status(404).send('No existe el producto');
-                User.findById(idUser)
-                    .then(user => {
-                        const nuevosProductos = user.products.filter(producto => producto != idProduct);
-                        user.products = nuevosProductos,
-                        user.save()
-                            .then(() => res.status(200).json('Se eliminó el producto del usuario'))
-                            .catch(err => res.status(403).json('No se pudo actualizar los productos del usuario'))
-                    })
-                    .catch(err => res.status(404).json('Error', err))
+
+                const imgLink = producto.img;
+                const img = imgLink.split('/')[4];
+                const rutaImg = path.join(__dirname, `../storage/images/${img}`);
+
+                fs.stat(rutaImg, (err) => {
+                    if(err) return res.status(404).send({Error: 'Archivo no encontrado'});
+                    fs.unlink(rutaImg, async (error) => {
+                        if(error) return  res.send({Error:'No se ha podido eliminar el archivo', error});
+
+                        User.findById(idUser)
+                        .then(user => {
+                            const nuevosProductos = user.products.filter(producto => producto != idProduct);
+                            user.products = nuevosProductos,
+                            user.save()
+                                .then(() => res.status(200).json('Se eliminó el producto del usuario'))
+                                .catch(err => res.status(403).json('No se pudo actualizar los productos del usuario'))
+                        })
+                        .catch(err => res.status(404).json('Error', err))
+
+                    });
+                });
+
+                
             })
             .catch(err => res.status(404).json('Error' + err));
     },
@@ -137,7 +152,6 @@ module.exports = {
             }
             try{
                 const user = await User.findById(idUser)
-                console.log(user + '+++++++++++++++++++++++++++++++++++++')
             }catch(err){
                 res.send({Error: 'Intentas agregar un producto con un usuario que no existe'})
             }
@@ -152,24 +166,26 @@ module.exports = {
 
             try{
                 const user = await User.findById(idUser);
-                console.log(user + '------------------------------')
 
-                let ProductDB = await Product.findOne({
-                    $or: [
-                        { name }
-                    ]
-                })
-                if (ProductDB) {
-                    if (name == ProductDB.name) {
-                        return res.send({ Error: 'El platillo ya existe, intenta con otro nombre de platillo' })
-                    }
+                const productsUser = await user.execPopulate('products')
 
-                }
+                //const ProductDB = productsUser.products.filter(product => product.name === name);
+
+                let ProductDB = [];
+
+                productsUser.products.forEach(product => {
+                    product.name === name ? ProductDB.push(product) : null;
+                });
+                
+                if (ProductDB.length > 0) {
+                    return res.send({ Error: 'El platillo ya existe, intenta con otro nombre de platillo' })
+                };
+
                 user.products.push(newProduct);
 
                 user.save()
                     .then(() => {
-                        console.log('Producto agregado al usuario')
+                        //console.log('Producto agregado al usuario')
                     })
                     .catch(err => res.status(404).send({ Error: err }));
                 

@@ -29,22 +29,15 @@ const userSchema = new Schema({
         trim: true,
         minlength: 3
     },
-    genero: {
-        type: String
-    },
     password: {
         type: String,
         trim: true,
         minlength: 8
 
     },
-    rol: {
-        type: String,
-        required: true
-    },
     products: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Product'
     }],
     logo: {
         type: String
@@ -93,9 +86,9 @@ const userSchema = new Schema({
             default: false
         }
     },
-    isVerify: Boolean,
     plan: {
-        type: String
+        type: String,
+        default: "Ninguno"
     },
 },
 {
