@@ -26,6 +26,19 @@ const productSchema = new Schema({
         required: true,
         trim: true,
         minlength: 3
+    },
+    categories: [{
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 3
+    }],
+    status: {
+        type: Boolean,
+        default: true
+    },
+    img: {
+        type: String
     }
 },
 {

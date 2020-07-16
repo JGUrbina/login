@@ -29,20 +29,67 @@ const userSchema = new Schema({
         trim: true,
         minlength: 3
     },
-    genero: {
-        type: String
-    },
     password: {
         type: String,
         trim: true,
         minlength: 8
 
     },
-    rol: {
-        type: String,
-        required: true
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
+    logo: {
+        type: String
     },
-    isVerify: Boolean
+    coverImg: {
+        type: String
+    },
+    comercialName: {
+        type: String
+    },
+    businessDescription: {
+        type: String
+    },
+    webUrl: {
+        type: String
+    },
+    instaUrl: {
+        type: String
+    },
+    fbUrl: {
+        type: String
+    },
+    twitterUrl: {
+        type: String
+    },
+    whatsNumber: {
+        type: Number
+    },
+    promotionalImg: {
+        type: String
+    },
+    ratingEmail: {
+        type: String
+    },
+    whataccepts: { 
+        delivery: {
+            type: Boolean,
+            default: false
+        },
+        localconsume: {
+            type: Boolean,
+            default: false
+        },
+        takeOrder: {
+            type: Boolean,
+            default: false
+        }
+    },
+    plan: {
+        type: String,
+        default: "Ninguno"
+    },
 },
 {
     timestamps: true,

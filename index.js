@@ -9,9 +9,6 @@ const cors = require('cors');
 //connect to data base
 async function initApp() {
     try {
-        connecBD(db.port, db.host, db.dbName)
-
-        //Listening
         app.listen(port, () => console.log(`server on ${host}`) );
     }catch(err) {
         console.error(err)
@@ -20,6 +17,8 @@ async function initApp() {
 }
  
 initApp()
+
+app.use('/public',express.static(__dirname + '/storage/images'))
 
 //Middlewares
 app.use(morgan('dev'));
@@ -33,8 +32,8 @@ const productRouters = require('./routers/product.router')
 
 app.use('/user', userRouters)
 app.use('/product', productRouters)
-app.use(express.static(__dirname + '/views'));
+app.use('/public', express.static(__dirname + '/views'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/login/index.html');
-})
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/views/login/index.html');
+// })
