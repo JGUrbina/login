@@ -17,7 +17,10 @@ config = {
     },
     front: {
         host: process.env.FRONT_HOST
-    }
+    },
+    conekta: {
+        conekta_key: process.env.CONEKTA_KEY
+    },
 }
 
 module.exports = config

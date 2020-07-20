@@ -22,15 +22,19 @@ app.use('/public',express.static(__dirname + '/storage/images'))
 //Middlewares
 app.use(morgan('dev'));
 app.use(cors());
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 //Routes
 
 //users
 const userRouters = require('./routers/user.router')
 const productRouters = require('./routers/product.router')
+const conektaRouters = require('./routers/conekta.router')
 
 app.use('/user', userRouters)
 app.use('/product', productRouters)
+app.use('/conekta', conektaRouters)
+
 app.use(express.static(__dirname + '/views'));
 
 app.get('/', (req, res) => {
