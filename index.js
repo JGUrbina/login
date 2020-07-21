@@ -1,5 +1,4 @@
 const {port, host} = require('./config').app
-const db = require('./config').db
 const express = require('express');
 const app = express();
 const connecBD = require('./db')
@@ -32,6 +31,7 @@ const userRouters = require('./routers/user.router')
 const productRouters = require('./routers/product.router')
 const conektaRouters = require('./routers/conekta.router')
 
+app.use('/conekta', conektaRouters)
 app.use('/user', userRouters)
 app.use('/product', productRouters)
 app.use('/public', express.static(__dirname + '/views'));
