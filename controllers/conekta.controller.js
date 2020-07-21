@@ -27,11 +27,13 @@ module.exports = {
     conekta.locale = 'es';
 
     conekta.Order.create(payload)
-    .then(function (res) {
-      console.log(res.toObject())
+    .then(function (res1) {
+      console.log(res1.toObject())
+      res.send(res1.toObject())
     },function(err) {
       err.details.forEach(function(detail, index) {
         console.log(detail);
+        res.status(400).send(detail)
       }) 
 
     })   
